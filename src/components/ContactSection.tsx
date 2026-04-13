@@ -40,7 +40,7 @@ const STATUS_ITEMS = [
   { label: 'Quantum Coherence', value: '99.7%', color: '#ff4757' },
 ];
 
-const MAP_QUERY = 'MiraiQ+Labs';
+const MAP_QUERY = 'A179,+Survey+Park+Rd';
 const MAP_EMBED_URL = `https://maps.google.com/maps?q=${MAP_QUERY}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
 export default function ContactSection() {
