@@ -1,6 +1,7 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Mail, Phone, MapPin, ArrowUpRight, Sparkles } from 'lucide-react';
+import footerLogo from '../assets/logo_transperant.svg';
 
 const CONTACT_ITEMS = [
   {
@@ -15,8 +16,8 @@ const CONTACT_ITEMS = [
   {
     icon: Phone,
     label: 'Direct Line',
-    value: '+91 90385 60097',
-    href: 'tel:+919038556097',
+    value: '+91 80172 47984',
+    href: 'tel:+918017247984',
     color: '#00ffc6',
     accent: 'rgba(0,255,198,0.08)',
     border: 'rgba(0,255,198,0.2)',
@@ -25,7 +26,7 @@ const CONTACT_ITEMS = [
     icon: MapPin,
     label: 'Physical Location',
     value: 'Find us on Google Maps',
-    href: 'https://maps.google.com',
+    href: 'https://maps.app.goo.gl/Vpm546arJKhkgXrU6',
     color: '#ffb300',
     accent: 'rgba(255,179,0,0.08)',
     border: 'rgba(255,179,0,0.2)',
@@ -39,9 +40,21 @@ const STATUS_ITEMS = [
   { label: 'Quantum Coherence', value: '99.7%', color: '#ff4757' },
 ];
 
+const MAP_QUERY = 'MiraiQ+Labs';
+const MAP_EMBED_URL = `https://maps.google.com/maps?q=${MAP_QUERY}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+
 export default function ContactSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
+  const currentYear = new Date().getFullYear();
+  const [currentTime, setCurrentTime] = useState(() => new Date().toLocaleTimeString());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date().toLocaleTimeString());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section
@@ -195,7 +208,58 @@ export default function ContactSection() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="relative p-6 rounded-sm overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, rgba(0,229,255,0.04), rgba(255,179,0,0.04))',
+                border: '1px solid rgba(0,229,255,0.1)',
+              }}
+            >
+              <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.4), transparent)' }} />
+              <div className="mb-4 flex items-start gap-3">
+                <div
+                  className="w-10 h-10 rounded-sm flex items-center justify-center flex-shrink-0"
+                  style={{ background: 'rgba(0,229,255,0.08)', border: '1px solid rgba(0,229,255,0.2)' }}
+                >
+                  <MapPin size={16} strokeWidth={1.5} style={{ color: '#00e5ff' }} />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-base mb-1" style={{ color: '#e0f7fa' }}>
+                    Location Map
+                  </h3>
+                  <p className="text-xs" style={{ color: '#78909c' }}>
+                    Explore our headquarters location in an interactive map preview.
+                  </p>
+                </div>
+              </div>
+
+              <div className="overflow-hidden rounded-sm border border-white/10" style={{ minHeight: '220px' }}>
+                <iframe
+                  title="MiraiQ Labs location"
+                  src={MAP_EMBED_URL}
+                  className="w-full h-full"
+                  style={{ minHeight: '220px', border: '0' }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+
+              <a
+                href={`https://maps.google.com/maps?q=${MAP_QUERY}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 mt-4 text-sm font-medium"
+                style={{ color: '#00e5ff' }}
+              >
+                View on Google Maps
+                <ArrowUpRight size={14} strokeWidth={1.5} />
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.6 }}
               className="relative p-8 rounded-sm overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, rgba(255,179,0,0.05), rgba(255,71,87,0.02))',
@@ -211,7 +275,7 @@ export default function ContactSection() {
                 A next-generation AI research and technology company dedicated to building the infrastructure of tomorrow's intelligent systems.
               </p>
               <div className="flex flex-wrap gap-2">
-                {['Agentic AI', 'Quantum', 'Training', 'Certified'].map((tag, i) => (
+                {['Agentic AI', 'Quantum', 'Training', 'Certified'].map(tag => (
                   <span
                     key={tag}
                     className="tag-chip"
@@ -237,26 +301,22 @@ export default function ContactSection() {
           className="mt-20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
           style={{ borderTop: '1px solid rgba(0,229,255,0.08)' }}
         >
-          <div className="flex items-center gap-3">
-            <div className="relative w-7 h-7">
-              <svg viewBox="0 0 36 36" fill="none" className="w-full h-full">
-                <defs>
-                  <linearGradient id="footer-logo-g" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#00e5ff" />
-                    <stop offset="100%" stopColor="#00ffc6" />
-                  </linearGradient>
-                </defs>
-                <polygon points="18,2 34,10 34,26 18,34 2,26 2,10" stroke="url(#footer-logo-g)" strokeWidth="1.5" fill="none" opacity="0.8" />
-                <circle cx="18" cy="18" r="4" fill="url(#footer-logo-g)" />
-              </svg>
+          <div className="flex items-center gap-4">
+            <div className="relative w-36 overflow-hidden rounded-full bg-slate-900">
+              <img src={footerLogo} alt="MiraiQ Labs logo" className="w-full h-full object-contain" />
             </div>
             <span className="font-mono text-xs" style={{ color: '#4a6572' }}>
-              © 2025 MiraiQ Labs Private Limited
+              © {currentYear} MiraiQ Labs Private Limited
             </span>
           </div>
-          <span className="font-mono text-xs" style={{ color: '#4a6572' }}>
-            Engineered for the future — launching soon
-          </span>
+          <div className="flex flex-col items-end gap-1 text-right">
+            <span className="font-mono text-xs" style={{ color: '#4a6572' }}>
+              Engineered for the future — launching soon
+            </span>
+            <span className="font-mono text-xs" style={{ color: '#4a6572' }}>
+              Local time: {currentTime}
+            </span>
+          </div>
         </motion.div>
       </div>
     </section>

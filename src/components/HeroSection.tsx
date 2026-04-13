@@ -114,7 +114,7 @@ export default function HeroSection() {
                 className="block text-3xl md:text-5xl lg:text-6xl mt-2 font-light"
                 style={{ color: '#90a4ae', letterSpacing: '0.02em' }}
               >
-                Private Limited
+                Coming Soon
               </span>
             </h1>
           </motion.div>
